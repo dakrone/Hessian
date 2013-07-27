@@ -1,0 +1,4 @@
+*.o
+*.hi
+*_flymake.hs
+dist
