@@ -18,4 +18,4 @@ cabal-version:       >=1.8
 executable hessian
   main-is:           hessian.hs
   -- other-modules:       
-  build-depends:       base ==4.6.*, aeson ==0.6.*, bytestring ==0.10.*, network ==2.4.*, http-conduit ==1.9.*, conduit ==1.0.*, transformers ==0.3.*, ansi-wl-pprint ==0.6.*
+  build-depends:       base ==4.6.*, aeson ==0.6.*, bytestring ==0.10.*, network ==2.4.*, http-conduit ==1.9.*, conduit ==1.0.*, transformers ==0.3.*, ansi-wl-pprint ==0.6.*, unix

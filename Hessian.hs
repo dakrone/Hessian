@@ -12,6 +12,7 @@ import Data.Aeson (decode)
 import qualified Data.ByteString.Lazy as L
 import Network
 import Network.HTTP.Conduit
+import qualified System.Posix.Env as E
 
 
 httpGet :: String -> IO L.ByteString
@@ -23,7 +24,10 @@ httpGet url = withSocketsDo $ do
 
 main :: IO ()
 main = do
-  json <- httpGet "http://localhost:9200/_cluster/health"
+  url <- E.getEnv "ESURL"
+  json <- httpGet $ case url of
+                      Nothing -> "http://localhost:9200/_cluster/health"
+                      Just u -> u ++ "/_cluster/health"
   case (decode json :: Maybe ESHealth) of
     Nothing -> putStrLn "Unable to retrieve cluster health."
     Just health -> putStrLn $ show health
