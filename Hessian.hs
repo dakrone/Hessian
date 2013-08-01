@@ -9,6 +9,7 @@ import Hessian.Data
 
 -- Other imports
 import Data.Aeson (decode)
+import Data.Maybe (fromMaybe)
 import qualified Data.ByteString.Lazy as L
 import Network
 import Network.HTTP.Conduit
@@ -25,9 +26,8 @@ httpGet url = withSocketsDo $ do
 main :: IO ()
 main = do
   url <- E.getEnv "ESURL"
-  json <- httpGet $ case url of
-                      Nothing -> "http://localhost:9200/_cluster/health"
-                      Just u -> u ++ "/_cluster/health"
+  json <- httpGet $ (fromMaybe "http://localhost:9200" url) ++
+          "/_cluster/health"
   case (decode json :: Maybe ESHealth) of
     Nothing -> putStrLn "Unable to retrieve cluster health."
     Just health -> putStrLn $ show health
